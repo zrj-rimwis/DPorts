@@ -1,0 +1,42 @@
+# Created by: Koop Mast <kwm@FreeBSD.org>
+# $FreeBSD$
+
+PORTNAME=	ocl-icd
+PORTVERSION=	2.2.3
+CATEGORIES=	lang devel
+MASTER_SITES=	https://forge.imag.fr/frs/download.php/598/
+
+MAINTAINER=	ohartman@zedat.fu-berlin.de
+COMMENT=	OpenCL Installable Client Driver
+
+LICENSE=	BSD2CLAUSE
+
+BUILD_DEPENDS=	opencl>=0:${PORTSDIR}/devel/opencl
+
+CONFLICTS=	freeocl-[0-9]* opencl-icd-[0-9]*
+
+USE_RUBY=	yes
+USE_LDCONFIG=	yes
+GNU_CONFIGURE=	yes
+RUBY_NO_RUN_DEPENDS=yes
+USES=		gmake pathfix libtool
+INSTALL_TARGET=	install-strip
+
+CONFIGURE_ARGS+=--disable-official-khronos-headers
+
+CPPFLAGS+=	-I${LOCALBASE}/include
+LDFLAGS+=	-L${LOCALBASE}/lib
+
+OPTIONS_DEFINE=	MANPAGES
+OPTIONS_DEFAULT=MANPAGES
+OPTIONS_SUB=	yes
+
+MANPAGES_BUILD_DEPENDS=	xmlto:${PORTSDIR}/textproc/xmlto \
+			asciidoc:${PORTSDIR}/textproc/asciidoc
+
+post-patch:
+	@${REINPLACE_CMD} -e 's|/etc/|${LOCALBASE}/etc/|g' \
+		${WRKSRC}/doc/libOpenCL.7.txt \
+		${WRKSRC}/ocl_icd_loader.c
+
+.include <bsd.port.mk>
