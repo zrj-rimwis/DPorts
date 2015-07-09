@@ -1,2 +1,5 @@
-LIB_DEPENDS+= libelf.so:${PORTSDIR}/devel/libelf
-CFLAGS+= -I${LOCALBASE}/include/libelf
+#LIB_DEPENDS+= libelf.so:${PORTSDIR}/devel/libelf
+#CFLAGS+= -I${LOCALBASE}/include/libelf
+
+# zrj: not sure how it got into llvm/clover
+CXXFLAGS+= -fexceptions

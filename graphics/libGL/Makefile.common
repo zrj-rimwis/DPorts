@@ -34,6 +34,10 @@ BUILD_DEPENDS+=	makedepend:${PORTSDIR}/devel/makedepend
 
 LIB_DEPENDS+=	libdevq.so:${PORTSDIR}/devel/libdevq
 
+# zrj: needed for dri,clover so why not here?
+LIB_DEPENDS+=	libelf.so:${PORTSDIR}/devel/libelf
+CFLAGS+=	-I${LOCALBASE}/include/libelf
+
 USES+=		gettext-tools gmake libtool pathfix pkgconfig shebangfix
 USE_LDCONFIG=	yes
 GNU_CONFIGURE=	yes
