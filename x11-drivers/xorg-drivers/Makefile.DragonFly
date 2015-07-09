@@ -1,0 +1,2 @@
+# zrj: i'm pretty sure useless anyway
+OPTIONS_DEFAULT:= ${OPTIONS_DEFAULT:NMACH64:NR128}
