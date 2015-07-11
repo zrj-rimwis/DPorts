@@ -17,19 +17,19 @@ USE_XORG=	xf86driproto \
 		presentproto
 INSTALL_TARGET=	install-strip
 # No Radeon kernel driver on non-x86 and PC98.
-ONLY_FOR_ARCHS=	i386 amd64
+#ONLY_FOR_ARCHS=	i386 amd64
 
 CONFIGURE_ARGS+=--disable-udev
-CONFIGURE_ARGS+=--disable-glamor
+CONFIGURE_ARGS+=--enable-glamor
 
 .include <bsd.port.options.mk>
 
-.if (${OSVERSION} >= 903000 && ${OSVERSION} < 1000000)
-RUN_DEPENDS+=	drm-kmod>=9:${PORTSDIR}/x11-drivers/drm-kmod
-
-post-patch:
-	@${REINPLACE_CMD} -e 's|"radeonkms"|"radeonkms_port"|g' \
-		${WRKSRC}/src/radeon_kms.c
-.endif
+#.if (${OSVERSION} >= 903000 && ${OSVERSION} < 1000000)
+#RUN_DEPENDS+=	drm-kmod>=9:${PORTSDIR}/x11-drivers/drm-kmod
+#
+#post-patch:
+#	@${REINPLACE_CMD} -e 's|"radeonkms"|"radeonkms_port"|g' \
+#		${WRKSRC}/src/radeon_kms.c
+#.endif
 
 .include <bsd.port.mk>

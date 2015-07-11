@@ -1,3 +1,5 @@
+include/xorg/glamor.h
+lib/xorg/modules/libglamoregl.so
 bin/X
 %%SUID%%@(,,4555) bin/Xorg
 %%NO_SUID%%bin/Xorg

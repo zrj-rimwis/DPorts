@@ -10,4 +10,6 @@ COMMENT=	X.Org mouse input driver
 XORG_CAT=	driver
 USES=		pathfix
 
+USE_XORG+=	presentproto
+
 .include <bsd.port.mk>

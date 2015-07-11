@@ -13,7 +13,7 @@ LICENSE=	MIT
 USE_GITHUB=	yes
 GH_ACCOUNT=	anholt
 
-USES=		autoreconf libtool pathfix pkgconfig python:3,build
+USES=		autoreconf libtool pathfix pkgconfig python:2,build
 USE_XORG=	xorg-macros x11
 USE_GL=		egl glesv2
 GNU_CONFIGURE=	yes

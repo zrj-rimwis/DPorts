@@ -22,7 +22,7 @@ USE_XORG=	glproto \
 .include <bsd.port.options.mk>
 
 CONFIGURE_ENV+=	xorg_cv_cc_flag__Wno_maybe_uninitialized=no
-CONFIGURE_ARGS+=	--disable-glamor
+CONFIGURE_ARGS+=	--enable-glamor
 LIB_DEPENDS+=	libxcb-util.so:${PORTSDIR}/x11/xcb-util
 CFLAGS+=	-D_WITH_GETLINE=1
 

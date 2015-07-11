@@ -18,6 +18,11 @@ LIB_DEPENDS=	libdrm.so:${PORTSDIR}/graphics/libdrm
 RUN_DEPENDS=	xkeyboard-config>=2.5:${PORTSDIR}/x11/xkeyboard-config \
 		xkbcomp:${PORTSDIR}/x11/xkbcomp
 
+BUILD_DEPENDS+=	${LOCALBASE}/libdata/pkgconfig/epoxy.pc:${PORTSDIR}/graphics/libepoxy
+LIB_DEPENDS+=	libgbm.so:${PORTSDIR}/graphics/gbm	\
+		libEGL.so:${PORTSDIR}/graphics/libEGL	\
+		libepoxy.so:${PORTSDIR}/graphics/libepoxy
+
 XORG_CAT=	xserver
 SLAVE_PORT?=	no
 
@@ -50,7 +55,8 @@ USE_OPENSSL=	yes
 CONFIGURE_ARGS?=--disable-dmx --disable-xvfb --disable-xnest \
 		--without-xmlto --disable-docs --disable-devel-docs \
 		--localstatedir=/var --without-dtrace --disable-xephyr \
-		--enable-record=yes --disable-dri3 --disable-xwayland
+		--enable-record=yes --disable-dri3 --disable-xwayland \
+		--enable-glamor --enable-dri --enable-glx-tls
 INSTALL_TARGET=	install-strip
 
 .if ${SLAVE_PORT} == "no"

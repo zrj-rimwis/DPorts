@@ -3,3 +3,6 @@
 
 # zrj: not sure how it got into llvm/clover
 CXXFLAGS+= -fexceptions
+
+# workaround for dri compilation when vaapi.pc is available (has build dep on v4l_compat)
+CONFIGURE_ARGS+= --disable-va

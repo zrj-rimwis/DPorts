@@ -81,7 +81,10 @@ CONFIGURE_ARGS+=	--enable-gbm
 # the third option in --with-egl-platforms is wayland.
 CONFIGURE_ARGS+=	--enable-egl --with-egl-platforms=x11,drm
 
-CONFIGURE_ARGS+=	--enable-gles2
+CONFIGURE_ARGS+=	--enable-gles1 --enable-gles2 --enable-glx-tls
+
+# avoid as hell picking dependency on -lgcrypt in dri/radeonsi_dri.so !
+CONFIGURE_ARGS+= --with-sha1=libcrypto ac_cv_lib_gcrypt_gcry_md_open=no
 
 # Clover (OpenCL).
 .if ${OPSYS} == DragonFly || (${OPSYS} == FreeBSD && ${OSVERSION} >= 1000000)
@@ -111,10 +114,6 @@ CONFIGURE_ENV+= LLVM_CONFIG=${LOCALBASE}/bin/llvm-config${MESA_LLVM_VER}
 CONFIGURE_ARGS+=--enable-gallium-llvm \
                 --enable-xvmc \
                 --with-gallium-drivers=r300,r600,radeonsi,svga,swrast
-
-.if !(${ARCH} == amd64 || ${ARCH} == i386)
-CONFIGURE_ARGS+=--disable-gallium-intel
-.endif
 
 # what to do with this one? Currently disabled in dri.
 .if ${COMPONENT:Mvdpau} == ""
