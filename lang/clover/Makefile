@@ -13,6 +13,9 @@ LIB_DEPENDS=	libdrm.so:${PORTSDIR}/graphics/libdrm \
 		libexpat.so:${PORTSDIR}/textproc/expat2
 RUN_DEPENDS=	opencl>=0:${PORTSDIR}/devel/opencl
 
+# zrj: needed for lib/clc/oland-r600--.bc dep
+RUN_DEPENDS+=	libclc>=0:${PORTSDIR}/devel/libclc
+
 USE_XORG=	glproto x11 xext xxf86vm xdamage xfixes dri2proto \
 		presentproto xvmc xshmfence
 
