@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	darktable
-PORTVERSION=	1.6.7
+PORTVERSION=	1.6.8
 CATEGORIES=	graphics
 MASTER_SITES=	https://github.com/darktable-org/${PORTNAME}/releases/download/release-${PORTVERSION}/
 
@@ -18,11 +18,11 @@ LIB_DEPENDS=	libexiv2.so:${PORTSDIR}/graphics/exiv2 \
 		libcurl.so:${PORTSDIR}/ftp/curl
 
 ONLY_FOR_ARCHS=	i386 amd64
-ONLY_FOR_ARCHS_REASON=	uses SSE extensions
+ONLY_FOR_ARCHS_REASON=	uses SSE instructions
 
 USES=		compiler:c++11-lib cmake:outsource desktop-file-utils	\
 		ninja pkgconfig tar:xz
-USE_GNOME=	librsvg2
+USE_GNOME=	intltool librsvg2
 USE_SQLITE=	yes
 USE_LDCONFIG=	${PREFIX}/lib/${PORTNAME}
 INSTALLS_ICONS=	yes

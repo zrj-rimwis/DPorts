@@ -58,7 +58,7 @@ PERL_VERSION=	5.20.2
 .elif ${PERL5_DEFAULT} == 5.22
 PERL_VERSION=	5.22.0
 .elif ${PERL5_DEFAULT} == devel
-PERL_VERSION=	5.23.1
+PERL_VERSION=	5.23.2
 # Force PERL_PORT here in case two identical PERL_VERSION.
 PERL_PORT?=	perl5-devel
 .else
@@ -274,6 +274,7 @@ PACKLIST_DIR?=	${PREFIX}/${SITE_ARCH_REL}/auto
 
 # In all those, don't use - before the command so that the user does
 # not wonder what has been ignored by this message "*** Error code 1 (ignored)"
+_USES_install+=	560:fix-perl-things
 fix-perl-things:
 # Remove STAGEDIR from .packlist and add the file to the plist.
 	@(if [ -d ${STAGEDIR}${PACKLIST_DIR} ] ; then \
@@ -297,8 +298,8 @@ fix-perl-things:
 	@${RMDIR} -p ${STAGEDIR}${PREFIX}/lib/perl5/${PERL_VER}/${PERL_ARCH} 2>/dev/null || :
 
 .if !target(regression-test)
-TEST_ARGS+=	${MAKE_ARGS}
-TEST_ENV+=	${MAKE_ENV}
+TEST_ARGS?=	${MAKE_ARGS}
+TEST_ENV?=	${MAKE_ENV}
 TEST_TARGET?=	test
 TEST_WRKSRC?=	${BUILD_WRKSRC}
 .if !target(test)

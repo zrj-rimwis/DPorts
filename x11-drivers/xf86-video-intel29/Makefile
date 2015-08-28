@@ -1,5 +1,6 @@
 PORTNAME=	xf86-video-intel
 PORTVERSION=	2.99.917
+PORTEPOCH=	1
 CATEGORIES=	x11-drivers
 
 MAINTAINER=	ftigeot@wolfpond.org

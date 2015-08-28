@@ -3,7 +3,7 @@
 
 PORTNAME=	perl
 DISTVERSION=	${PERL_VERSION}
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	lang devel perl5
 MASTER_SITES=	CPAN/../../src/5.0 CPAN/../by-authors/id/R/RJ/RJBS
 DIST_SUBDIR=	perl
@@ -166,23 +166,20 @@ PKGINSTALL=	${WRKDIR}/use.perl
 PKGDEINSTALL=	${WRKDIR}/use.perl
 .endif
 
-.if ${PORT_OPTIONS:MDEBUG}
-STRIP=
-STRIP_CMD=	${TRUE}
-.endif
-
 # Put a symlink to the future libperl.so.x.yy so that -lperl works.
 post-extract:
 	${LN} -s libperl.so.${PERL_VERSION} ${WRKSRC}/libperl.so
 	${LN} -s libperl.so.${PERL_VERSION} ${WRKSRC}/libperl.so.${PERL_VER}
 
+.if !defined(MAKING_PATCHES)
+# make clean patch makepatch MAKING_PATCHES=
 post-patch:
 	${REINPLACE_CMD} -e 's|/usr/local|${LOCALBASE}|g' \
 		${WRKSRC}/Configure ${WRKSRC}/hints/freebsd.sh
-.if ${PORT_OPTIONS:MPTHREAD}
+post-patch-PTHREAD-on:
 	${REINPLACE_CMD} -e 's|%%PTHREAD_LIBS%%|-lpthread|g;' \
 		${WRKSRC}/hints/freebsd.sh
-.else
+post-patch-PTHREAD-off:
 	${REINPLACE_CMD} -e 's|%%PTHREAD_LIBS%%||g;' \
 		${WRKSRC}/hints/freebsd.sh
 .endif

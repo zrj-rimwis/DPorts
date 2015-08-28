@@ -3,7 +3,7 @@
 
 PORTNAME=	groff
 PORTVERSION=	1.22.2
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	textproc
 MASTER_SITES=	GNU
 
@@ -15,8 +15,7 @@ LICENSE=	GPLv3
 BUILD_DEPENDS=	${LOCALBASE}/bin/psselect:${PORTSDIR}/print/psutils
 RUN_DEPENDS:=	${BUILD_DEPENDS}
 
-USE_GHOSTSCRIPT=yes
-USES=		cpe gmake perl5 shebangfix
+USES=		cpe ghostscript gmake perl5 shebangfix
 GNU_CONFIGURE=	yes
 CONFIGURE_ARGS+=	--with-awk=/usr/bin/awk
 CONFIGURE_ENV+=	PERLPATH=${perl_CMD} # shebangfix

@@ -4,6 +4,7 @@
 PORTNAME=	mpv
 PORTVERSION=	0.9.2
 DISTVERSIONPREFIX=	v
+PORTREVISION=	4
 PORTEPOCH=	1
 CATEGORIES=	multimedia audio
 MASTER_SITES=	http://ftp.waf.io/pub/release/:1 \
@@ -16,10 +17,7 @@ COMMENT=	Free and open-source general-purpose video player
 
 LICENSE=	GPLv2
 
-LIB_DEPENDS=	libavcodec26.so:${PORTSDIR}/multimedia/ffmpeg26 \
-		libass.so:${PORTSDIR}/multimedia/libass \
-		libdvdread.so:${PORTSDIR}/multimedia/libdvdread \
-		libdvdnav.so:${PORTSDIR}/multimedia/libdvdnav
+LIB_DEPENDS=	libavcodec.so:${PORTSDIR}/multimedia/ffmpeg
 BUILD_DEPENDS=	rst2man:${PORTSDIR}/textproc/py-docutils
 
 USE_GITHUB=	yes
@@ -32,7 +30,7 @@ USE_XORG=	x11 xv xxf86vm
 USE_LDCONFIG=	yes
 INSTALLS_ICONS=	yes
 
-CPPFLAGS+=	-I.. -I${LOCALBASE}/include/ffmpeg26 -I${LOCALBASE}/include
+CPPFLAGS+=	-I.. -I${LOCALBASE}/include
 LDFLAGS+=	-L${LOCALBASE}/lib
 
 CONFIGURE_ARGS=	--prefix=${PREFIX} \
@@ -44,29 +42,43 @@ CONFIGURE_ARGS=	--prefix=${PREFIX} \
 		--disable-alsa \
 		--disable-pdf
 
-OPTIONS_DEFINE=		BS2B DOCS ENCA LADSPA LCMS2 LIBGUESS LUAJIT ZSH
+OPTIONS_DEFINE=		ASS BS2B DOCS ENCA LADSPA LCMS2 \
+			LIBGUESS LUAJIT ZSH
+OPTIONS_DEFAULT=	ASS DVDREAD DVDNAV
 OPTIONS_GROUP=		IN VO AO
-OPTIONS_GROUP_IN=	CDIO LIBBLURAY V4L YTDL SMB
+OPTIONS_GROUP_IN=	CDIO DVDREAD DVDNAV LIBBLURAY V4L SMB
 OPTIONS_GROUP_VO=	CACA OPENGL VAAPI VDPAU XINERAMA
 OPTIONS_GROUP_AO=	JACK PULSEAUDIO
 OPTIONS_SUB=		yes
 
+ASS_DESC=	ASS/SSA subtitle and OSD rendering
 BS2B_DESC=	Enable Bauer Stereophonic-to-Binaural DSP support
+DVDREAD_DESC=	DVD Playback support
+DVDNAV_DESC=	DVD menu navigation
 ENCA_DESC=	Enable encoding detection support
 LIBGUESS_DESC=	Enable high-speed character set detection support
 LUAJIT_DESC=	Use LuaJIT instead of Lua
-YTDL_DESC=	Install youtube-dl
 IN_DESC=	Input
 VO_DESC=	Video Output
 AO_DESC=	Audio Output
 
+ASS_LIB_DEPENDS=		libass.so:${PORTSDIR}/multimedia/libass
+ASS_CONFIGURE_ENABLE=		libass
+
 BS2B_LIB_DEPENDS=		libbs2b.so:${PORTSDIR}/audio/libbs2b
 BS2B_CONFIGURE_ENABLE=		libbs2b
+
+DVDREAD_LIB_DEPENDS=		libdvdread.so:${PORTSDIR}/multimedia/libdvdread
+DVDREAD_CONFIGURE_ENABLE=	dvdread
+
+DVDNAV_LIB_DEPENDS=		libdvdnav.so:${PORTSDIR}/multimedia/libdvdnav
+DVDNAV_CONFIGURE_ENABLE=	dvdnav
 
 ENCA_LIB_DEPENDS=		libenca.so:${PORTSDIR}/converters/enca
 ENCA_CONFIGURE_ENABLE=		enca
 
-LADSPA_LIB_DEPENDS=		ladspa/amp.so:${PORTSDIR}/audio/ladspa
+LADSPA_BUILD_DEPENDS=		${LOCALBASE}/lib/ladspa/amp.so:${PORTSDIR}/audio/ladspa
+LADSPA_RUN_DEPENDS=		${LOCALBASE}/lib/ladspa/amp.so:${PORTSDIR}/audio/ladspa
 LADSPA_CONFIGURE_ENABLE=	ladspa
 
 LCMS2_LIB_DEPENDS=		liblcms2.so:${PORTSDIR}/graphics/lcms2
@@ -94,16 +106,13 @@ V4L_BUILD_DEPENDS=		${LOCALBASE}/include/linux/videodev2.h:${PORTSDIR}/multimedi
 V4L_LIB_DEPENDS=		libv4l2.so:${PORTSDIR}/multimedia/libv4l
 V4L_CONFIGURE_ENABLE=		tv-v4l2
 
-YTDL_BUILD_DEPENDS=		${LOCALBASE}/bin/youtube-dl:${PORTSDIR}/www/youtube_dl
-
 SMB_LIB_DEPENDS=		libsmbclient.so:${PORTSDIR}/net/samba-libsmbclient
 SMB_CONFIGURE_ENABLE=		libsmbclient
 
 CACA_LIB_DEPENDS=		libcaca.so:${PORTSDIR}/graphics/libcaca
 CACA_CONFIGURE_ENABLE=		caca
 
-OPENGL_USE=			XORG=glproto
-OPENGL_LIB_DEPENDS=		libGL.so:${PORTSDIR}/graphics/libGL
+OPENGL_USE=			GL=gl
 OPENGL_CONFIGURE_ENABLE=	gl
 
 VAAPI_LIB_DEPENDS=		libva.so:${PORTSDIR}/multimedia/libva

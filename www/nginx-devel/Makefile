@@ -2,8 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	nginx
-PORTVERSION=	1.9.2
-PORTREVISION=	1
+PORTVERSION=	1.9.4
 CATEGORIES=	www
 MASTER_SITES=	http://nginx.org/download/
 MASTER_SITES+=	LOCAL/osa
@@ -53,6 +52,7 @@ OPTIONS_DEFINE=	\
 	MAIL_SMTP \
 	MAIL_SSL \
 	SPDY \
+	HTTPV2 \
 	STREAM \
 	STREAM_SSL \
 	THREADS \
@@ -146,6 +146,7 @@ MAIL_POP3_DESC=			Enable POP3 proxy module
 MAIL_SMTP_DESC=			Enable SMTP proxy module
 MAIL_SSL_DESC=			Enable mail_ssl module
 SPDY_DESC=			Enable SPDY protocol support (SSL req.)
+HTTPV2_DESC=			Enable HTTP/2 protocol support (SSL req.)
 STREAM_DESC=			Enable stream module
 STREAM_SSL_DESC=		Enable stream_ssl module (SSL req.)
 THREADS_DESC=			Enable threads support
@@ -308,7 +309,7 @@ EXTRA_PATCHES+=	${PATCHDIR}/extra-patch-ngx_http_auth_digest_module.c
 .endif
 
 .if ${PORT_OPTIONS:MHTTP_AUTH_KRB5}
-GIT_HTTP_AUTH_KRB5_VERSION=	29cb489
+GIT_HTTP_AUTH_KRB5_VERSION=	f76d5d9
 GH_ACCOUNT+=	stnoonan:auth_krb5
 GH_PROJECT+=	spnego-http-auth-nginx-module:auth_krb5
 GH_TAGNAME+=	${GIT_HTTP_AUTH_KRB5_VERSION}:auth_krb5
@@ -365,12 +366,12 @@ JAVA_VERSION=	1.8
 JAVA_VENDOR=	openjdk
 JAVA_BUILD=	yes
 JAVA_RUN=	yes
-NGINX_CLOJURE_VERSION=	0.3.0
+NGINX_CLOJURE_VERSION=	0.4.1
 GH_ACCOUNT+=	nginx-clojure:clojure
 GH_PROJECT+=	nginx-clojure:clojure
 GH_TAGNAME+=	v${NGINX_CLOJURE_VERSION}:clojure
+CONFIGURE_ENV+=	"JNI_INCS=-I${LOCALBASE}/openjdk8/include -I${LOCALBASE}/openjdk8/include/freebsd"
 CONFIGURE_ARGS+=--add-module=${WRKSRC_clojure}/src/c
-EXTRA_PATCHES+=	${PATCHDIR}/extra-patch-nginx-clojure-src-c-config
 .endif
 
 .if ${PORT_OPTIONS:MECHO}
@@ -382,7 +383,7 @@ CONFIGURE_ARGS+=--add-module=${WRKSRC_echo}
 .endif
 
 .if ${PORT_OPTIONS:MHEADERS_MORE}
-NGINX_HEADERS_MORE_VERSION=	0.26
+NGINX_HEADERS_MORE_VERSION=	0.261
 GH_ACCOUNT+=	openresty:headers_more
 GH_PROJECT+=	headers-more-nginx-module:headers_more
 GH_TAGNAME+=	v${NGINX_HEADERS_MORE_VERSION}:headers_more
@@ -658,9 +659,10 @@ CONFIGURE_ARGS+=--add-module=${WRKSRC_memc}
 
 .if ${PORT_OPTIONS:MMODSECURITY}
 NGINX_MODSECURITY_VERSION=	2.9.0
-LIB_DEPENDS+=	libpcre.so:${PORTSDIR}/devel/pcre \
-		libapr-1.so:${PORTSDIR}/devel/apr1 \
+LIB_DEPENDS+=	libapr-1.so:${PORTSDIR}/devel/apr1 \
 		libcurl.so:${PORTSDIR}/ftp/curl \
+		libluajit-5.1.so:${PORTSDIR}/lang/luajit \
+		libpcre.so:${PORTSDIR}/devel/pcre \
 		libyajl.so:${PORTSDIR}/devel/yajl
 USE_APACHE=	22+
 USE_GNOME+=	libxml2
@@ -687,7 +689,7 @@ CONFIGURE_ARGS+=--without-http_rewrite_module \
 .endif
 
 .if ${PORT_OPTIONS:MPASSENGER}
-PASSENGER_VERSION=	5.0.10
+PASSENGER_VERSION=	5.0.15
 MASTER_SITES+=	http://s3.amazonaws.com/phusion-passenger/releases/:passenger
 DISTFILES+=	passenger-${PASSENGER_VERSION}.tar.gz:passenger
 CONFIGURE_ARGS+=--add-module=${WRKDIR}/passenger-${PASSENGER_VERSION}/ext/nginx
@@ -818,10 +820,25 @@ GH_TAGNAME+=	v${NGINX_XSS_VERSION}:xss
 CONFIGURE_ARGS+=--add-module=${WRKSRC_xss}
 .endif
 
+.if ${PORT_OPTIONS:MSPDY} && ${PORT_OPTIONS:MHTTPV2}
+IGNORE=		current HTTP/2 implementation replaces SPDY module support, please disable SPDY
+.endif
+
 .if ${PORT_OPTIONS:MSPDY}
 NGINX_OPENSSL=	yes
 USE_HTTP_SSL=	yes
 CONFIGURE_ARGS+=--with-http_spdy_module
+.endif
+
+.if ${PORT_OPTIONS:MHTTPV2}
+NGINX_OPENSSL=	yes
+USE_HTTP_SSL=	yes
+CONFIGURE_ARGS+=--with-http_v2_module
+USE_OPENSSL_PORT=	yes
+NGINX_HTTPV2_VERSION=	3
+PATCH_SITES+=	http://nginx.org/patches/http2/:httpv2
+PATCHFILES+=	patch.http2-v${NGINX_HTTPV2_VERSION}_${PORTVERSION}.txt:httpv2
+PATCH_DIST_STRIP=	-p1
 .endif
 
 .if ${PORT_OPTIONS:MSTREAM}
@@ -948,7 +965,7 @@ post-patch:
 .endif
 .if ${PORT_OPTIONS:MCLOJURE}
 	@${REINPLACE_CMD} \
-		's!%%JAVA_HOME%%!${JAVA_HOME}!g' \
+		'45,47d' \
 		${WRKSRC_clojure}/src/c/config
 .endif
 .if ${PORT_OPTIONS:MDRIZZLE}

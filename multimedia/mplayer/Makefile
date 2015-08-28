@@ -3,21 +3,22 @@
 
 PORTNAME=	mplayer
 PORTVERSION=	${MPLAYER_PORT_VERSION}
-PORTREVISION=	2
+CATEGORIES=	multimedia audio
 
+MAINTAINER=	riggs@FreeBSD.org
 COMMENT=	High performance media player supporting many formats
 
-.include "${.CURDIR}/Makefile.shared"
+.include "${.CURDIR}/Makefile.common"
 
 OPTIONS_DEFINE=	AALIB AMR_NB AMR_WB BLURAY CACA CDIO DEBUG DV \
 		ENCA FONTCONFIG FRIBIDI GIF GNUTLS GSM GUI IPV6 JACK \
-		LADSPA LIBMNG LIRC LZO NAS OCFLAGS  OPENAL OPENGL \
+		LADSPA LIBMNG LIRC LZO NAS OCFLAGS OPENAL OPENGL \
 		OPENJPEG OPUS PULSEAUDIO REAL RTC RTCPU RTMP \
 		SCHROEDINGER SDL SKINS SMB SVGALIB V4L VDPAU VPX \
-		WIN32 X11 X11DGA X11VM XINERAMA XVIDEO XVMC
+		X11 X11DGA X11VM XINERAMA XVIDEO XVMC
 
 OPTIONS_DEFAULT=FONTCONFIG FRIBIDI GNUTLS IPV6 OCFLAGS OPENGL RTCPU \
-		SKINS WIN32 X11 X11DGA X11VM XINERAMA XVIDEO
+		SKINS X11 X11DGA X11VM XINERAMA XVIDEO
 
 BLURAY_DESC?=	BluRay support
 ENCA_DESC?=	Charset conversion via enca
@@ -27,7 +28,6 @@ REAL_DESC?=	Enable realplayer plugin
 RTC_DESC?=	Add support for kernel real time clock
 RTCPU_DESC?=	Use runtime CPU detection on supported archs
 SKINS_DESC?=	Install skins for GUI
-WIN32_DESC?=	Install win32 binary codecs
 X11DGA_DESC?=	X11 DGA video driver support
 X11VM_DESC?=	X11 VidMode support
 
@@ -121,6 +121,9 @@ pre-everything::
 	@${ECHO_MSG} "or download them from"
 	@${ECHO_MSG} "http://www.mplayerhq.hu/"
 .endif
+
+pre-patch:
+	${MV} ${WRKDIR}/ffmpeg-${FFMPEG_VERSION} ${WRKSRC}/ffmpeg
 
 post-patch:
 .if ${OSVERSION} >= 900010

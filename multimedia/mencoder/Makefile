@@ -3,26 +3,26 @@
 
 PORTNAME=	mencoder
 PORTVERSION=	${MPLAYER_PORT_VERSION}
-PORTREVISION=	1
+CATEGORIES=	multimedia audio
 
+MAINTAINER=	riggs@FreeBSD.org
 COMMENT=	Convenient video file and movie encoder
 
-.include "${.CURDIR}/../mplayer/Makefile.shared"
+.include "${.CURDIR}/../mplayer/Makefile.common"
 
 OPTIONS_DEFINE=	AMR_NB AMR_WB BLURAY CDIO DEBUG DV FAAC FONTCONFIG \
 		FRIBIDI GIF GNUTLS GSM IPV6 JACK LADSPA LIBMNG LZO \
 		MAD NAS OCFLAGS OPENAL OPENJPEG OPUS PULSEAUDIO REAL \
 		RTCPU RTMP SCHROEDINGER SMB THEORA TWOLAME V4L VPX \
-		WIN32 X264 XVID
+		X264 XVID
 
-OPTIONS_DEFAULT=GIF GNUTLS IPV6 OCFLAGS RTCPU WIN32 X264 XVID
+OPTIONS_DEFAULT=GIF GNUTLS IPV6 OCFLAGS RTCPU X264 XVID
 
 BLURAY_DESC?=	BluRay support
 LZO_DESC?=	Enable external liblzo library
 OCFLAGS_DESC?=	Use optimized compiler flags
 REAL_DESC?=	Enable realplayer plugin
 RTCPU_DESC?=	Use runtime CPU detection on supported archs
-WIN32_DESC?=	Install win32 binary codecs
 
 RESTRICTED=	Port has restricted dependencies
 
@@ -79,6 +79,9 @@ pre-everything::
 	@${ECHO_MSG} "OPTIONS framework. At the moment, these settings are:"
 	@${ECHO_MSG} "DEFAULT_DVD_DEVICE=${DEFAULT_DVD_DEVICE}"
 	@${ECHO_MSG} "DEFAULT_CDROM_DEVICE=${DEFAULT_CDROM_DEVICE}"
+
+pre-patch:
+	${MV} ${WRKDIR}/ffmpeg-${FFMPEG_VERSION} ${WRKSRC}/ffmpeg
 
 post-patch:
 .if ${OSVERSION} >= 900010
