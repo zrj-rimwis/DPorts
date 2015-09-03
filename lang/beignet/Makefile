@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	beignet
-PORTVERSION=	1.0.3
+PORTVERSION=	1.1.0
 CATEGORIES=	lang
 MASTER_SITES=	https://01.org/sites/default/files/
 DISTVERSIONSUFFIX=	-source
@@ -12,7 +12,7 @@ COMMENT=	OpenCL library for Intel GPUs
 
 BUILD_DEPENDS=	clang${LLVMVER}:${PORTSDIR}/lang/clang${LLVMVER} \
 		opencl>=0:${PORTSDIR}/devel/opencl
-LIB_DEPENDS=	libOpenCL.so:${PORTSDIR}/lang/ocl-icd \
+LIB_DEPENDS=	libOpenCL.so:${PORTSDIR}/devel/ocl-icd \
 		libdrm.so:${PORTSDIR}/graphics/libdrm
 RUN_DEPENDS=	opencl>=0:${PORTSDIR}/devel/opencl
 
@@ -22,22 +22,34 @@ USES=		cmake gmake pkgconfig shebangfix
 USE_XORG=	sm ice x11 xext xfixes
 USE_GL=		gl
 SHEBANG_FILES=	src/git_sha1.sh backend/kernels/compile.sh
-LLVMVER=	35
+LLVMVER=	36
 
 CMAKE_ARGS+=	-DLLVM_CONFIG_EXECUTABLE=${LOCALBASE}/bin/llvm-config${LLVMVER}
 
 ONLY_FOR_ARCHS=	i386 amd64
 ONLY_FOR_ARCHS_REASON= Beignet needs a graphics driver supported by the Intel KMS driver
 
-BROKEN_FREEBSD_10=	libc++ bugs, USE_GCC doesn't work. Help appriciated.
-BROKEN_FREEBSD_9=	Beignet is only supported on FreeBSD 10.1 and newer
+BROKEN_FreeBSD_10=	Does not build. Help appreciated
+BROKEN_FreeBSD_9=	Beignet is only supported on FreeBSD 10.1 and newer
+
+OPTIONS_DEFINE=	TESTS
+TESTS_DESC=	Build and run the test suite
+
+.include <bsd.port.options.mk>
 
 post-patch:
 	@${REINPLACE_CMD} -e 's|llvm-dis|llvm-dis${LLVMVER}|g; \
 		s|clang |clang${LLVMVER} |g' \
 		${WRKSRC}/backend/kernels/compile.sh
 
+post-patch-TESTS-off:
+	@${REINPLACE_CMD} -e 's|ADD_SUBDIRECTORY(utests)||g' \
+		${WRKSRC}/CMakeLists.txt
+
 post-install:
 	@${RM} -rf ${STAGEDIR}${PREFIX}/include/CL
+
+post-install-TESTS-on:
+	@cd ${WRKSRC}/utests && sh ./setenv.sh && ./utest_run
 
 .include <bsd.port.mk>
