@@ -86,7 +86,8 @@ PLIST_FILES+=	"@comment ${FONTSDIR}/fonts.dir" \
 . if ${XORG_CAT} == "lib"
 USES+=		pathfix libtool
 USE_LDCONFIG=	yes
-CONFIGURE_ARGS+=--enable-malloc0returnsnull
+#zrj: removed from xorg-macros.m4 since like 2014
+#CONFIGURE_ARGS+=--enable-malloc0returnsnull
 . endif
 
 . if ${XORG_CAT} == "proto"

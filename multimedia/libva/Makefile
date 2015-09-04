@@ -14,6 +14,9 @@ LICENSE_FILE=	${WRKSRC}/COPYING
 BUILD_DEPENDS=	${LOCALBASE}/include/linux/videodev2.h:${PORTSDIR}/multimedia/v4l_compat
 LIB_DEPENDS=	libdrm.so:${PORTSDIR}/graphics/libdrm
 
+# zrj: needed to build clover if libva is already present VAAPI.pc
+RUN_DEPENDS=	v4l_compat>0:${PORTSDIR}/multimedia/v4l_compat
+
 USES=		alias autoreconf gmake libtool pkgconfig tar:bzip2
 USE_XORG=	glproto pciaccess xext xfixes
 USE_GL=		gl
