@@ -1,0 +1,65 @@
+CFLAGS+=-Dmmap64=mmap -D_WITH_GETLINE -DETIME=ETIMEDOUT
+
+# zrj: heh like i giva
+CFLAGS+=-Diopl\(x\)=0 -Dtypeof=__typeof__
+
+dfly-patch:
+# hmm lets avoid this +=
+	${REINPLACE_CMD} -e 's@\(DEBUG_CFLAGS\)+="@\1="$$\{\1\}@g'	\
+		${WRKSRC}/configure
+# lets not build overlay dir, for now...
+	${REINPLACE_CMD} -e 's@overlay/Makefile@@g'			\
+		${WRKSRC}/configure
+	${REINPLACE_CMD} -e 's@overlay@@g'				\
+		${WRKSRC}/Makefile.in
+# lets don't try this on dfly
+	${REINPLACE_CMD} -e 's@mount("debug"@//cant_do@g' 		\
+		${WRKSRC}/lib/igt_debugfs.c
+# lets avoid dealing with ALIGN differences
+	${REINPLACE_CMD} -e 's/[[:<:]]ALIGN[[:>:]]/LINUX_ALIGN/g'	\
+		${WRKSRC}/benchmarks/gem_userptr_benchmark.c		\
+		${WRKSRC}/lib/drmtest.h					\
+		${WRKSRC}/lib/intel_os.c				\
+		${WRKSRC}/lib/media_fill_gen7.c				\
+		${WRKSRC}/lib/media_fill_gen8.c				\
+		${WRKSRC}/lib/media_fill_gen8lp.c			\
+		${WRKSRC}/lib/media_fill_gen9.c				\
+		${WRKSRC}/lib/media_spin.c				\
+		${WRKSRC}/lib/rendercopy_gen6.c				\
+		${WRKSRC}/lib/rendercopy_gen7.c				\
+		${WRKSRC}/lib/rendercopy_gen8.c				\
+		${WRKSRC}/lib/rendercopy_gen9.c				\
+		${WRKSRC}/overlay/kms/kms-overlay.c			\
+		${WRKSRC}/overlay/x11/x11-overlay.c			\
+		${WRKSRC}/tests/gem_ctx_thrash.c			\
+		${WRKSRC}/tests/gem_exec_lut_handle.c			\
+		${WRKSRC}/tests/gem_exec_parse.c			\
+		${WRKSRC}/tests/gem_streaming_writes.c			\
+		${WRKSRC}/tests/gem_userptr_blits.c			\
+		${WRKSRC}/tools/null_state_gen/intel_batchbuffer.h
+# patch now deal latter
+	${REINPLACE_CMD} -e 's@[[:<:]]jmp_buf[[:>:]]@sigjmp_buf@g'	\
+		${WRKSRC}/lib/igt_core.h
+# change include
+	${REINPLACE_CMD} -e 's@sys/io.h@machine/cpufunc.h@g'		\
+		${WRKSRC}/tools/intel_reg.c				\
+		${WRKSRC}/tools/intel_vga_read.c			\
+		${WRKSRC}/tools/intel_vga_write.c
+# oh! malloc.h strikes again
+	${REINPLACE_CMD} -e '/malloc.h/d;'				\
+		${WRKSRC}/tests/gem_reloc_overflow.c
+
+# bash goodies
+	${REINPLACE_CMD} -e 's@/\(bin/bash\)@/usr/local/\1@g'		\
+		${WRKSRC}/scripts/run-tests.sh				\
+		${WRKSRC}/scripts/who.sh				\
+		${WRKSRC}/tests/check_drm_clients			\
+		${WRKSRC}/tests/ddx_intel_after_fbdev			\
+		${WRKSRC}/tests/debugfs_emon_crash			\
+		${WRKSRC}/tests/drv_debugfs_reader			\
+		${WRKSRC}/tests/drv_missed_irq_hang			\
+		${WRKSRC}/tests/drv_module_reload			\
+		${WRKSRC}/tests/kms_sysfs_edid_timing			\
+		${WRKSRC}/tests/sysfs_l3_parity				\
+		${WRKSRC}/tests/test_rte_check				\
+		${WRKSRC}/tests/tools_test
