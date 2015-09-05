@@ -10,12 +10,12 @@ COMMENT=	Tools for development/testing of the i915 DRM driver
 LICENSE=	MIT
 
 USES=		tar:bzip2 gmake python:3
-#PLIST_FILES=	bin/${PORTNAME}
-#WRKSRC:=	${WRKDIR}/${PORTNAME}-${PORTVERSION}
 
-BUILD_DEPENDS+=	swig2.0:${PORTSDIR}/devel/swig20
-RUN_DEPENDS+=	swig2.0:${PORTSDIR}/devel/swig20
-#makedepends=(swig gtk-doc xorg-util-macros )
+BUILD_DEPENDS+=	swig2.0:${PORTSDIR}/devel/swig20 \
+		bash:${PORTSDIR}/shells/bash
+RUN_DEPENDS+=	swig2.0:${PORTSDIR}/devel/swig20 \
+		bash:${PORTSDIR}/shells/bash
+
 LIB_DEPENDS=	libdrm.so:${PORTSDIR}/graphics/libdrm \
 		libpciaccess.so:${PORTSDIR}/devel/libpciaccess
 
@@ -33,7 +33,7 @@ CONFIGURE_ARGS=	--prefix=${PREFIX} \
 
 # zrj: don't annoy me
 CONFIGURE_ARGS+= xorg_cv_cc_flag__pedantic=no \
-		 xorg_cv_cc_flag__errwarn=no enable_overlay_xvlib=no
+		 xorg_cv_cc_flag__errwarn=no
 
 CFLAGS+=	-std=c99 -Wno-variadic-macros -Wno-maybe-uninitialized
 
