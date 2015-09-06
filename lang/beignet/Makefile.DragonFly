@@ -14,6 +14,7 @@ dfly-patch:
 	${REINPLACE_CMD} -e 's/[[:<:]]isinf[[:>:]]/std::isinf/g'	\
 			 -e 's/[[:<:]]isnan[[:>:]]/std::isnan/g'	\
 		${WRKSRC}/utests/utest_generator.py			\
+		${WRKSRC}/utests/compiler_half.cpp			\
 		${WRKSRC}/utests/compiler_math.cpp			\
 		${WRKSRC}/utests/builtin_tgamma.cpp			\
 		${WRKSRC}/utests/builtin_pow.cpp			\
