@@ -1,0 +1,12 @@
+--- scripts/CMakeLists.txt.orig	2015-09-03 21:06:42.000000000 +0300
++++ scripts/CMakeLists.txt
+@@ -42,6 +42,7 @@ if(UNIX)
+   file(GENERATE OUTPUT "scripts/pocl-standalone.install" INPUT "scripts/pocl-standalone.install.in")
+ 
+   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pocl-standalone.install" RENAME "pocl-standalone"
+-        DESTINATION ${POCL_INSTALL_PUBLIC_BINDIR})
++        DESTINATION ${POCL_INSTALL_PUBLIC_BINDIR}
++        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+ 
+ endif()
+

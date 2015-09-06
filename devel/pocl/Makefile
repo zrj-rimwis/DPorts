@@ -15,7 +15,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 BUILD_DEPENDS=	${LOCALBASE}/llvm36/bin/llvm-config:${PORTSDIR}/devel/llvm36
 LIB_DEPENDS=	libOpenCL.so:${PORTSDIR}/devel/opencl \
 		libhwloc.so:${PORTSDIR}/devel/hwloc \
-		libltdl.so${PORTSDIR}/devel/libltdl
+		libltdl.so:${PORTSDIR}/devel/libltdl
 
 ONLY_FOR_ARCHS=	amd64
 
