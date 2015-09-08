@@ -12,10 +12,12 @@ COMMENT=	Portable computing language
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-BUILD_DEPENDS=	${LOCALBASE}/llvm36/bin/llvm-config:${PORTSDIR}/devel/llvm36
-LIB_DEPENDS=	libOpenCL.so:${PORTSDIR}/devel/opencl \
+BUILD_DEPENDS=	${LOCALBASE}/llvm36/bin/llvm-config:${PORTSDIR}/devel/llvm36 \
+		opencl>=0:${PORTSDIR}/devel/opencl
+LIB_DEPENDS=	libOpenCL.so:${PORTSDIR}/devel/ocl-icd \
 		libhwloc.so:${PORTSDIR}/devel/hwloc \
 		libltdl.so:${PORTSDIR}/devel/libltdl
+RUN_DEPENDS=	opencl>=0:${PORTSDIR}/devel/opencl
 
 ONLY_FOR_ARCHS=	amd64
 
