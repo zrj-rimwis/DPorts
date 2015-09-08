@@ -2,5 +2,6 @@ MOZ_OPTIONS+= --disable-webrtc
 
 # zrj: lets have at least one browser that works out-of-the-box
 OPTIONS_DEFAULT:= ${OPTIONS_DEFAULT:NDBUS}
+OPTIONS_DEFAULT+= BUNDLED_CAIRO
 
 PULSEAUDIO_LIB_DEPENDS= libpulse.so:${PORTSDIR}/audio/pulseaudio
