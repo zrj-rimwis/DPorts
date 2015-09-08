@@ -1,6 +1,6 @@
---- src/mapi/entry_x86_tsd.h.orig	2013-10-05 05:59:22.000000000 +0200
-+++ src/mapi/entry_x86_tsd.h	2014-07-29 20:28:05.000000000 +0200
-@@ -60,8 +60,8 @@ __asm__(".balign 32\n"
+--- src/mapi/entry_x86_tsd.h.orig	2015-09-02 20:06:23.000000000 +0300
++++ src/mapi/entry_x86_tsd.h	2015-09-08 09:13:29.000000000 +0300
+@@ -58,8 +58,8 @@ __asm__(".balign 32\n"
  #include <string.h>
  #include "u_execmem.h"
  

@@ -1,6 +1,6 @@
---- src/mapi/entry_x86_tls.h.orig	2013-10-05 05:59:22.000000000 +0200
-+++ src/mapi/entry_x86_tls.h	2014-07-29 20:28:05.000000000 +0200
-@@ -73,8 +73,8 @@ __asm__(".text");
+--- src/mapi/entry_x86_tls.h.orig	2015-09-02 20:06:23.000000000 +0300
++++ src/mapi/entry_x86_tls.h	2015-09-08 09:14:05.000000000 +0300
+@@ -71,8 +71,8 @@ __asm__(".text");
  extern unsigned long
  x86_current_tls();
  

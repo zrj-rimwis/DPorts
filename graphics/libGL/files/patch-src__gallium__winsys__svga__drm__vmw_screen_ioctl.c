@@ -1,8 +1,8 @@
---- ./src/gallium/winsys/svga/drm/vmw_screen_ioctl.c.orig	2014-01-06 22:15:40.000000000 +0100
-+++ ./src/gallium/winsys/svga/drm/vmw_screen_ioctl.c	2014-02-23 22:01:50.000000000 +0100
-@@ -66,6 +66,11 @@
-  */
- #define SVGA3D_SURFACE_HINT_SCANOUT (1 << 9)
+--- src/gallium/winsys/svga/drm/vmw_screen_ioctl.c.orig	2015-09-06 19:54:50.000000000 +0300
++++ src/gallium/winsys/svga/drm/vmw_screen_ioctl.c	2015-09-08 09:17:43.000000000 +0300
+@@ -76,6 +76,11 @@ vmw_region_size(struct vmw_region *regio
+    return region->size;
+ }
  
 +#if defined(__DragonFly__) || defined(__FreeBSD__) || \
 +    defined(__NetBSD__) || defined(__OpenBSD__)

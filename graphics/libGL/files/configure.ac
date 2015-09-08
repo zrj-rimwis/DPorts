@@ -1,6 +1,6 @@
---- configure.ac.orig	2015-03-28 19:20:39.000000000 +0100
-+++ configure.ac	2015-03-29 12:20:43.817681000 +0200
-@@ -68,6 +68,7 @@
+--- configure.ac.orig	2015-09-06 19:54:50.000000000 +0300
++++ configure.ac	2015-09-08 10:05:40.000000000 +0300
+@@ -78,6 +78,7 @@ DRI2PROTO_REQUIRED=2.6
  DRI3PROTO_REQUIRED=1.0
  PRESENTPROTO_REQUIRED=1.0
  LIBUDEV_REQUIRED=151
@@ -8,7 +8,7 @@
  GLPROTO_REQUIRED=1.4.14
  LIBOMXIL_BELLAGIO_REQUIRED=0.0
  LIBVA_REQUIRED=0.35.0
-@@ -87,7 +88,7 @@
+@@ -97,7 +98,7 @@ AC_PROG_CXX
  AM_PROG_CC_C_O
  AM_PROG_AS
  AX_CHECK_GNU_MAKE
@@ -17,16 +17,16 @@
  AC_PROG_SED
  AC_PROG_MKDIR_P
  
-@@ -689,7 +690,7 @@
+@@ -740,7 +741,7 @@ AC_ARG_ENABLE([dri],
      [enable_dri=yes])
  
  case "$host_os" in
 -linux*)
-+linux*|freebsd*)
++linux*|freebsd*|dragonfly*)
      dri3_default=yes
      ;;
  *)
-@@ -955,6 +956,9 @@
+@@ -997,6 +998,9 @@ esac
  PKG_CHECK_MODULES([LIBUDEV], [libudev >= $LIBUDEV_REQUIRED],
                    have_libudev=yes, have_libudev=no)
  
@@ -36,7 +36,7 @@
  AC_ARG_ENABLE([sysfs],
      [AS_HELP_STRING([--enable-sysfs],
          [enable /sys PCI identification @<:@default=disabled@:>@])],
-@@ -1051,6 +1055,10 @@
+@@ -1093,6 +1097,10 @@ if test "$have_libudev" = yes; then
      DEFINES="$DEFINES -DHAVE_LIBUDEV"
      have_pci_id=yes
  fi
@@ -47,11 +47,10 @@
  
  if test "$have_sysfs" = yes; then
      DEFINES="$DEFINES -DHAVE_SYSFS"
-@@ -1173,6 +1181,23 @@
+@@ -1215,6 +1223,22 @@ if test "x$enable_dri" = xyes; then
          ;;
      gnu*)
          DEFINES="$DEFINES -DHAVE_ALIAS"
-+dnl not sure about dri3 support, just enable it for now.
 +        if test "x$enable_dri3" = xyes; then
 +            DEFINES="$DEFINES -DHAVE_DRI3"
 +        fi
@@ -71,7 +70,7 @@
          ;;
      cygwin*)
          if test "x$with_dri_drivers" = "xyes"; then
-@@ -1350,6 +1375,8 @@
+@@ -1371,6 +1395,8 @@ fi
  AM_CONDITIONAL(HAVE_GBM, test "x$enable_gbm" = xyes)
  if test "x$need_pci_id$have_libudev" = xyesyes; then
      GBM_PC_REQ_PRIV="libudev >= $LIBUDEV_REQUIRED"
@@ -80,7 +79,7 @@
  else
      GBM_PC_REQ_PRIV=""
  fi
-@@ -1528,9 +1555,19 @@
+@@ -1524,9 +1550,19 @@ if test "x$enable_opencl" = xyes; then
          AC_MSG_ERROR([cannot enable OpenCL without Gallium])
      fi
  
@@ -100,7 +99,7 @@
  
      if test "x$have_libclc" = xno; then
          AC_MSG_ERROR([pkg-config cannot find libclc.pc which is required to build clover.
-@@ -1819,8 +1856,6 @@
+@@ -1794,8 +1830,6 @@ if test "x$enable_gallium_llvm" = xyes;
                  CLANG_LIBDIR=${LLVM_LIBDIR}
              fi
              CLANG_RESOURCE_DIR=$CLANG_LIBDIR/clang/${LLVM_VERSION}

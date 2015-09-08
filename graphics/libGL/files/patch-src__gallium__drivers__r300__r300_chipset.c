@@ -1,6 +1,6 @@
---- ./src/gallium/drivers/r300/r300_chipset.c.orig	2014-01-06 22:15:40.000000000 +0100
-+++ ./src/gallium/drivers/r300/r300_chipset.c	2014-02-23 22:01:50.000000000 +0100
-@@ -53,6 +53,21 @@
+--- src/gallium/drivers/r300/r300_chipset.c.orig	2015-09-02 20:06:23.000000000 +0300
++++ src/gallium/drivers/r300/r300_chipset.c	2015-09-08 09:21:52.000000000 +0300
+@@ -53,6 +53,21 @@ static void r300_apply_hyperz_blacklist(
      if (!os_get_process_name(proc_name, sizeof(proc_name)))
          return;
  
