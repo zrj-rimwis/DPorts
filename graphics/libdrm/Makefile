@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	libdrm
-PORTVERSION=	2.4.60
+PORTVERSION=	2.4.64
 PORTEPOCH=	1
 CATEGORIES=	graphics x11
 MASTER_SITES=	http://dri.freedesktop.org/libdrm/
@@ -51,12 +51,15 @@ CONFIGURE_ARGS+=--disable-vmwgfx
 .if ${ARCH} == x86_64 || ${ARCH} == i386
 PLIST_SUB+=	INTEL_DRIVER=""
 PLIST_SUB+=	RADEON_DRIVERS=""
+PLIST_SUB+=	AMDGPU_DRIVERS=""
 .elif ${ARCH} == ia64 || ${ARCH} == powerpc || ${ARCH} == powerpc64
 PLIST_SUB+=	INTEL_DRIVER="@comment "
 PLIST_SUB+=	RADEON_DRIVERS=""
+PLIST_SUB+=	AMDGPU_DRIVERS=""
 .else
 PLIST_SUB+=	INTEL_DRIVER="@comment "
 PLIST_SUB+=	RADEON_DRIVERS="@comment "
+PLIST_SUB+=	AMDGPU_DRIVERS="@comment "
 .endif
 
 pre-patch:
