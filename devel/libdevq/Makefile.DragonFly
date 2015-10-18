@@ -1,0 +1,5 @@
+
+# zrj: for now will do on radeons, not sure about i915kms
+dfly-patch:
+	${REINPLACE_CMD} -e 's@busid_format = "\%\*s \%\*s pci:\%d:\%d:\%d.\%d";@busid_format = "\%\*s \%\*s pci:\%x:\%x:\%x.\%x";@g'   \
+		${WRKSRC}/src/device.c
