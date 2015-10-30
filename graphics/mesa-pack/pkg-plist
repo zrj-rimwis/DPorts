@@ -1,0 +1,148 @@
+@comment special file for special purposes ;)
+.mesa-pack/MESAOPTIONS
+
+@comment OPENGL option
+%%OPENGL%%.mesa-pack/include/GL/gl.h
+%%OPENGL%%.mesa-pack/include/GL/gl_mangle.h
+%%OPENGL%%.mesa-pack/include/GL/glcorearb.h
+%%OPENGL%%.mesa-pack/include/GL/glext.h
+%%OPENGL%%.mesa-pack/include/GL/glx.h
+%%OPENGL%%.mesa-pack/include/GL/glx_mangle.h
+%%OPENGL%%.mesa-pack/include/GL/glxext.h
+%%OPENGL%%.mesa-pack/include/GL/osmesa.h
+%%OPENGL%%.mesa-pack/include/GL/wglext.h
+%%OPENGL%%.mesa-pack/libdata/pkgconfig/gl.pc
+
+@comment OPENGL+DRI options
+%%DRI%%.mesa-pack/etc/drirc
+%%DRI%%.mesa-pack/include/GL/internal/dri_interface.h
+%%DRI%%.mesa-pack/libdata/pkgconfig/dri.pc
+
+@comment OPENGL+OSMESAS or OPENGL+GALLIUM+OSMESAG
+%%TOSMESA%%.mesa-pack/lib/libOSMesa.so
+%%TOSMESA%%.mesa-pack/lib/libOSMesa.so.8
+%%TOSMESA%%.mesa-pack/lib/libOSMesa.so.8.0.0
+%%TOSMESA%%.mesa-pack/libdata/pkgconfig/osmesa.pc
+
+@comment OPENGL+GLAPI
+%%GLAPI%%.mesa-pack/lib/libglapi.so
+%%GLAPI%%.mesa-pack/lib/libglapi.so.0
+%%GLAPI%%.mesa-pack/lib/libglapi.so.0.0.0
+
+@comment OPENGL+DRI+GLAPI+GBM
+%%GBM%%.mesa-pack/include/gbm.h
+%%GBM%%.mesa-pack/lib/libgbm.so
+%%GBM%%.mesa-pack/lib/libgbm.so.1
+%%GBM%%.mesa-pack/lib/libgbm.so.1.0.0
+%%GBM%%.mesa-pack/libdata/pkgconfig/gbm.pc
+
+@comment OPENGL+DRI+GLAPI+GLX
+%%GLX%%.mesa-pack/lib/libGL.so
+%%GLX%%.mesa-pack/lib/libGL.so.1
+%%GLX%%.mesa-pack/lib/libGL.so.1.2.0
+
+@comment OPENGL+GLAPI+GLESV2
+%%GLESV2%%.mesa-pack/include/GLES2/gl2.h
+%%GLESV2%%.mesa-pack/include/GLES2/gl2ext.h
+%%GLESV2%%.mesa-pack/include/GLES2/gl2platform.h
+%%GLESV2%%.mesa-pack/include/GLES3/gl3.h
+%%GLESV2%%.mesa-pack/include/GLES3/gl31.h
+%%GLESV2%%.mesa-pack/include/GLES3/gl3ext.h
+%%GLESV2%%.mesa-pack/include/GLES3/gl3platform.h
+%%GLESV2%%.mesa-pack/lib/libGLESv2.so
+%%GLESV2%%.mesa-pack/lib/libGLESv2.so.2
+%%GLESV2%%.mesa-pack/lib/libGLESv2.so.2.0.0
+%%GLESV2%%.mesa-pack/libdata/pkgconfig/glesv2.pc
+
+@comment OPENGL+DRI+GLAPI+EGL or (+GBM+EGL if with EDRM option)
+%%EGL%%.mesa-pack/include/EGL/egl.h
+%%EGL%%.mesa-pack/include/EGL/eglext.h
+%%EGL%%.mesa-pack/include/EGL/eglextchromium.h
+%%EGL%%.mesa-pack/include/EGL/eglmesaext.h
+%%EGL%%.mesa-pack/include/EGL/eglplatform.h
+%%EGL%%.mesa-pack/include/KHR/khrplatform.h
+%%EGL%%.mesa-pack/lib/libEGL.so
+%%EGL%%.mesa-pack/lib/libEGL.so.1
+%%EGL%%.mesa-pack/lib/libEGL.so.1.0.0
+%%EGL%%.mesa-pack/libdata/pkgconfig/egl.pc
+
+@comment OPENGL+DRI+GLAPI+EGL+EWAYLAND
+%%EWAYLAND%%.mesa-pack/lib/libwayland-egl.so
+%%EWAYLAND%%.mesa-pack/lib/libwayland-egl.so.1
+%%EWAYLAND%%.mesa-pack/lib/libwayland-egl.so.1.0.0
+%%EWAYLAND%%.mesa-pack/libdata/pkgconfig/wayland-egl.pc
+
+@comment OPENGL+GALLIUM+CLOVER
+%%CLOVER%%.mesa-pack/etc/OpenCL/vendors/mesa.icd
+%%CLOVER%%.mesa-pack/lib/gallium-pipe/pipe_swrast.so
+%%CLOVER%%.mesa-pack/lib/libMesaOpenCL.so
+%%CLOVER%%.mesa-pack/lib/libMesaOpenCL.so.1
+%%CLOVER%%.mesa-pack/lib/libMesaOpenCL.so.1.0.0
+
+@comment OPENGL+GALLIUM+CLOVER+DRI+SVGA
+%%SVGA_CLOVER%%.mesa-pack/lib/gallium-pipe/pipe_vmwgfx.so
+
+@comment OPENGL+GALLIUM+CLOVER+DRI+I915
+%%I915_CLOVER%%.mesa-pack/lib/gallium-pipe/pipe_i915.so
+
+@comment OPENGL+GALLIUM+CLOVER+DRI+R300
+%%R300_CLOVER%%.mesa-pack/lib/gallium-pipe/pipe_r300.so
+
+@comment OPENGL+GALLIUM+CLOVER+DRI+R600
+%%R600_CLOVER%%.mesa-pack/lib/gallium-pipe/pipe_r600.so
+
+@comment OPENGL+GALLIUM+CLOVER+DRI+GLAPI+GBM+EGL+EDRM+RADEONSI
+%%RADEONSI_CLOVER%%.mesa-pack/lib/gallium-pipe/pipe_radeonsi.so
+
+
+
+@comment OPENGL+DRI+GALLIUM+VAAPI
+%%VAAPI%%.mesa-pack/lib/dri/gallium_drv_video.so
+
+@comment OPENGL+DRI+GALLIUM+R600+XVMC
+%%R600_XVMC%%.mesa-pack/lib/libXvMCr600.so
+%%R600_XVMC%%.mesa-pack/lib/libXvMCr600.so.1
+%%R600_XVMC%%.mesa-pack/lib/libXvMCr600.so.1.0
+%%R600_XVMC%%.mesa-pack/lib/libXvMCr600.so.1.0.0
+
+@comment OPENGL+DRI+GALLIUM+VDPAU+R300
+%%R300_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_r300.so
+%%R300_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_r300.so.1
+%%R300_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_r300.so.1.0
+%%R300_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_r300.so.1.0.0
+
+@comment OPENGL+DRI+GALLIUM+VDPAU+R600
+%%R600_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_r600.so
+%%R600_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_r600.so.1
+%%R600_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_r600.so.1.0
+%%R600_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_r600.so.1.0.0
+
+@comment OPENGL+DRI+GLAPI+GBM+EGL+EDRM+GALLIUM+VDPAU+RADEONSI
+%%RADEONSI_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_radeonsi.so
+%%RADEONSI_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_radeonsi.so.1
+%%RADEONSI_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_radeonsi.so.1.0
+%%RADEONSI_VDPAU%%.mesa-pack/lib/vdpau/libvdpau_radeonsi.so.1.0.0
+
+
+
+@comment OPENGL+DRI+DRID
+%%I915_DRIVER%%.mesa-pack/lib/dri/i915_dri.so
+%%I965_DRIVER%%.mesa-pack/lib/dri/i965_dri.so
+%%R200_DRIVER%%.mesa-pack/lib/dri/r200_dri.so
+%%RADEON_DRIVER%%.mesa-pack/lib/dri/radeon_dri.so
+%%SWRAST_DRIVER%%.mesa-pack/lib/dri/swrast_dri.so
+
+@comment OPENGL+DRI+GALLIUM
+%%SWRAST_GDRIVER%%.mesa-pack/lib/dri/kms_swrast_dri.so
+
+@comment OPENGL+DRI+GALLIUM+SVGA
+%%SVGA_GDRIVER%%.mesa-pack/lib/dri/vmwgfx_dri.so
+
+@comment OPENGL+DRI+GALLIUM+R300
+%%R300_GDRIVER%%.mesa-pack/lib/dri/r300_dri.so
+
+@comment OPENGL+DRI+GALLIUM+R600
+%%R600_GDRIVER%%.mesa-pack/lib/dri/r600_dri.so
+
+@comment OPENGL+DRI+GLAPI+GBM+EGL+EDRM+GALLIUM+RADEONSI
+%%RADEONSI_GDRIVER%%.mesa-pack/lib/dri/radeonsi_dri.so
