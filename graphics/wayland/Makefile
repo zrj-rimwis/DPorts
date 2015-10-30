@@ -17,7 +17,8 @@ LIB_DEPENDS=	libevent.so:${PORTSDIR}/devel/libevent2	\
 
 GNU_CONFIGURE=	YES
 
-CONFIGURE_ARGS+=	--disable-documentation --with-libevent=${PREFIX}
+CONFIGURE_ARGS+=	--disable-documentation --disable-static \
+			--with-libevent=${PREFIX}
 
 .include <bsd.port.mk>
 
