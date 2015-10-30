@@ -1,0 +1,14 @@
+
+Enable PTHREADS in xeglthreads demo
+
+--- configure.ac.orig	2015-10-29 15:05:08.000000000 +0200
++++ configure.ac
+@@ -165,7 +165,7 @@ OSMESA_LIBS=`echo $OSMESA_LIBS | sed 's|
+ 
+ dnl Compiler macros
+ case "$host_os" in
+-linux*|*-gnu*|gnu*)
++dragonfly*|linux*|*-gnu*|gnu*)
+     DEMO_CFLAGS="$DEMO_CFLAGS -D_GNU_SOURCE -DPTHREADS"
+     ;;
+ solaris*)

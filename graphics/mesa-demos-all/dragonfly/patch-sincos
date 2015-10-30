@@ -1,0 +1,13 @@
+--- src/egl/opengles2/es2gears.c.orig	2012-06-25 18:34:58.000000000 +0300
++++ src/egl/opengles2/es2gears.c
+@@ -55,6 +55,10 @@
+ #define VERTICES_PER_TOOTH 34
+ #define GEAR_VERTEX_STRIDE 6
+ 
++#ifdef __DragonFly__
++#define sincos(a,sn,cs) do { *(sn)=sin(a); *(cs)=cos(a); } while (0)
++#endif
++
+ /**
+  * Struct describing the vertices in triangle strip
+  */
